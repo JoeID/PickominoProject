@@ -48,29 +48,7 @@ class State:
     
     def __str__(self):
         return str((str(self.keptDices), str(self.remainingDices))) 
-    '''
-        keptDices = []
-        remainingDices = []
-
-        dice_value = sum_values
-        # adding worms
-        for j in range(self.keptDices[dice_value]):
-            keptDices.append("W")
-        for j in range(self.remainingDices[dice_value]):
-            remainingDices.append("W")
-        
-        # adding regular dices
-        for dice_value in range(1, 6):
-            for j in range(self.keptDices[dice_value]):
-                keptDices.append(dice_value)
-            for j in range(self.remainingDices[dice_value]):
-                remainingDices.append(dice_value)
-
-        #Converting back keptDice and remainingDice to tuples to fit the announced types
-        keptDices = tuple(keptDices)
-        remainingDices = tuple(remainingDices)
-        return "Kept dices : " + str(keptDices) + " Remaining dices : " + str(remainingDices)'''
-
+    
     def __hash__(self):
         return hash((self.keptDices,self.remainingDices))
     
