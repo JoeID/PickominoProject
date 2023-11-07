@@ -1,4 +1,4 @@
-import utils
+from utils import *
 
 class Rewards:
     C = 0

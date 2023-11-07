@@ -1,5 +1,5 @@
-import pickomino_project
-import utils
+from pickomino_project import *
+from utils import *
 
 def compute_opt_policy(s : State):
     # first, compute reward and action (STOP) for every final state
