@@ -30,6 +30,13 @@ def compute_probability(max_dices : int):
             probability[distribution] = p
     return probability
 
+def sum_values(dices):
+    '''Compute the value of a dice set'''
+    res = 5 * dices[0]
+    for dice_value in range(1, 6):
+        res += dices[dice_value] * dice_value
+    return res
+
 ###############
 #### TESTS ####
 ###############
