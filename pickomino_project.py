@@ -6,7 +6,13 @@ class Rewards:
 
 
 class Action:
-    STOP = 0
+    '''There are 3 types of action : 
+        -pick a value of a rolled dice to keep and continue
+        -pick a value of a rolled dice to keep and take the highest value domino reacheable
+        -loose your turn'''
+    
+    def __init__(self, type, value):
+        self.stop = True
 
 
 class State:
@@ -18,13 +24,14 @@ class State:
         assert(sum(keptDices) + sum(remainingDices) == 8)
         self.keptDices = keptDices
         self.remainingDices = remainingDices
+        self.possibleActions = []
 
-        self.is_final = True
-        for i in range(6):
-            if self.keptDices[i] == 0 or self.remainingDices[i] != 0:
-                self.is_final = False
-                # a dice can be picked, so state is not final
-                break
+        self.is_final = self.possibleActions == set({})
+        #for i in range(6):
+        #    if self.keptDices[i] == 0 or self.remainingDices[i] != 0:
+        #        self.is_final = False
+        #        # a dice can be picked, so state is not final
+        #        break
     
     def __str__(self):
         keptDices = []
@@ -62,7 +69,7 @@ class State:
         #Attention not to keep this when doing part 2.
         if dices_sum > len(Rewards.R):
             dices_sum = len(Rewards.R)-1
-        return Rewards.R[reward]
+        return Rewards.R[dices_sum]
         
 
 def reward(s : State, a):

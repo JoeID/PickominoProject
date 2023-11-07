@@ -1,22 +1,32 @@
 from pickomino_project import *
 from utils import *
 
-def compute_opt_policy(s : State):
+def opt_policy(s : State):
     # first, compute reward and action (STOP) for every final state
+    policy = {} # maps a state to a (action, expected_reward) pair
+
+    def expected_reward(s, a):
+        if a == 0:
+            pass
     
-    # policy = {} # maps a state to a (action, reward) pair
 
-    # for k in range(9):
-    #     for keptDices in utils.generate_distributions(k):
-    #         for remainingDices in utils.generate_distributions(8 - k):
+    def opt_policy_state(s):
+        if s in policy:
+            return policy[s]
+        else:
+            for action in action_list: #TODO
+                pass #TODO
 
-    #             s = State(keptDices, remainingDices)
-
-    #             if s.is_final_state():
-    #                 a = Action.STOP
-    #                 policy[s] = (a, reward(s, a))
+    
+    #for k in range(9):
+    #    for keptDices in generate_distributions(k):
+    #        for remainingDices in generate_distributions(8 - k):
+    #            s = State(keptDices, remainingDices)
+    #            if s.is_final_state():
+    #                a = Action.STOP
+    #                policy[s] = (a, reward(s, a))
     
     
     print("finished !")
 
-compute_opt_policy()
+opt_policy()
