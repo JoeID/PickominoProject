@@ -1,3 +1,4 @@
+import math
 from pickomino_project import *
 from utils import *
 
@@ -14,8 +15,12 @@ def opt_policy(s : State):
         if s in policy:
             return policy[s]
         else:
-            for action in action_list: #TODO
-                pass #TODO
+            max_expected = -math.inf
+            best_action = None
+            for action in s.possibleActions:
+                if expected_reward(s, a):
+                    pass
+
 
     
     #for k in range(9):
