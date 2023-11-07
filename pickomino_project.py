@@ -2,7 +2,7 @@ from utils import *
 
 class Rewards:
     C = 0
-    R = [0 for i in range(21)] + [1 + i // 4 for i in range(16)]
+    R = [0 for i in range(21)] + [1 + i // 4 for i in range(16)] + [4 for i in range(4)]
 
 
 class Action:    
@@ -18,6 +18,8 @@ class Action:
         self.stop = stop
         self.value = value
 
+    def __str__(self) -> str:
+        return str((str(self.stop),str(self.value)))
 
 class State:
 
@@ -28,20 +30,29 @@ class State:
         assert(sum(keptDices) + sum(remainingDices) == 8)
         self.keptDices = keptDices
         self.remainingDices = remainingDices
-        self.possibleActions = set()
+        #It is often unecessary to compute the possibles actions
+        self.possibleActions = None
 
-        #Computing the possible actions from the state
-        for i in range(6):
-            if self.keptDices[i] == 0 and self.remainingDices[i] != 0:
-                self.possibleActions.add(Action(True,i))
-                self.possibleActions.add(Action(False,i))
-        if self.possibleActions == set():
-            self.possibleActions.add(Action(True,None))
+    def get_possibleActions(self):
+        if self.possibleActions is None:
+        #If not already done, computie the possible actions from the state
+            self.possibleActions = set()
+            for i in range(6):
+                if self.keptDices[i] == 0 and self.remainingDices[i] != 0:
+                    self.possibleActions.add(Action(True,i))
+                    self.possibleActions.add(Action(False,i))
+            if self.possibleActions == set():
+                self.possibleActions.add(Action(True,None))
+        #In any case, return the set of possible actions
+        return self.possibleActions
     
     def __str__(self):
+        return str((str(self.keptDices), str(self.remainingDices))) 
+    '''
         keptDices = []
         remainingDices = []
 
+        dice_value = sum_values
         # adding worms
         for j in range(self.keptDices[dice_value]):
             keptDices.append("W")
@@ -58,32 +69,10 @@ class State:
         #Converting back keptDice and remainingDice to tuples to fit the announced types
         keptDices = tuple(keptDices)
         remainingDices = tuple(remainingDices)
-        return "Kept dices : " + str(keptDices) + " Remaining dices : " + str(remainingDices)
+        return "Kept dices : " + str(keptDices) + " Remaining dices : " + str(remainingDices)'''
 
-    ''' UTILE ?
-    def get_kept_value(self):
-        # assuming player chooses to stop immediately, how many points do they have ?
-        if self.keptDices[0] == 0: # player did not keep a worm : failed !
-            return Rewards.C
-        if self.is_final:
-            return Rewards.C
-
-        #Counting the number of points given by the worms 
-        dices_sum = 5 * self.keptDices[0]
-        #Counting the number of points given by the others dice faces
-        for dice_value in range(1, 6):
-            dices_sum += self.keptDices[dice_value] * dice_value
-        if dices_sum < 21:
-            return Rewards.C
-        #If sum is over the max usable sum, use it at this maximum.
-        #Attention not to keep this when doing part 2.
-        if dices_sum > len(Rewards.R):
-            dices_sum = len(Rewards.R) - 1
-        return Rewards.R[dices_sum]'''
-        
-
-def reward(s : State, a):
-    if a != Action.STOP:
-        return 0 # reward is 0 for intermediate states (where player chooses to continue)
+    def __hash__(self):
+        return hash((self.keptDices,self.remainingDices))
     
-    return s.get_kept_value()
+    def __eq__(self, other):
+        return (self.keptDices, self.remainingDices) == (other.keptDices, other.remainingDices)
