@@ -12,8 +12,8 @@ class Action:
 class State:
 
     def __init__(self, keptDice, remainingDice):
-        # keptDice : list of length 6 that indicates how many dice i the player has kept
-        # remainingDice : similar
+        # keptDice : tuple of length 6 that indicates how many dice i the player has kept
+        # remainingDice : tuple of length 6 that indicates how many dice i the player has kept
         assert(len(keptDice) == 6 and len(remainingDice) == 6)
         assert(sum(keptDice) + sum(remainingDice) == 8)
         # nbKept : nbKept : the player keeps the first nbKept bits for the moment
@@ -35,7 +35,10 @@ class State:
                 keptDice.append(dice_value + 1)
             for j in range(self.remainingDice[dice_value]):
                 remainingDice.append(dice_value + 1)
-        return "Kept dice : " + str(keptDice) + " Remaining dice " + str(remainingDice)
+        #Converting back keptDice and remainingDice to tuples to fit the announced types
+        keptDice = tuple(keptDice)
+        remainingDice = tuple(remainingDice)
+        return "Kept dice : " + str(keptDice) + " Remaining dice : " + str(remainingDice)
             
     def is_final(self):
         # returns true iff state is final ; that is no dice can be picked
