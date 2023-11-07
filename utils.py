@@ -45,4 +45,4 @@ def run_tests():
     print("Début des tests :")
     test_compute_probability()
 
-run_tests()
+# run_tests()
