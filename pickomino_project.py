@@ -40,11 +40,20 @@ class State:
     def __str__(self):
         keptDices = []
         remainingDices = []
-        for dice_value in range(6):
+
+        # adding worms
+        for j in range(self.keptDices[dice_value]):
+            keptDices.append("W")
+        for j in range(self.remainingDices[dice_value]):
+            remainingDices.append("W")
+        
+        # adding regular dices
+        for dice_value in range(1, 6):
             for j in range(self.keptDices[dice_value]):
-                keptDices.append(dice_value + 1)
+                keptDices.append(dice_value)
             for j in range(self.remainingDices[dice_value]):
-                remainingDices.append(dice_value + 1)
+                remainingDices.append(dice_value)
+
         #Converting back keptDice and remainingDice to tuples to fit the announced types
         keptDices = tuple(keptDices)
         remainingDices = tuple(remainingDices)
@@ -57,22 +66,22 @@ class State:
 
     def get_kept_value(self):
         # assuming player chooses to stop immediately, how many points do they have ?
-        if self.keptDices[5] == 0: # player did not keep a worm : failed !
+        if self.keptDices[0] == 0: # player did not keep a worm : failed !
             return Rewards.C
         if self.is_final:
             return Rewards.C
 
         #Counting the number of points given by the worms 
-        dices_sum = 5 * self.keptDices[5]
+        dices_sum = 5 * self.keptDices[0]
         #Counting the number of points given by the others dice faces
-        for dice_value in range(5):
-            dices_sum += self.keptDices[dice_value] * (dice_value + 1)
+        for dice_value in range(1, 6):
+            dices_sum += self.keptDices[dice_value] * dice_value
         if dices_sum < 21:
             return Rewards.C
         #If sum is over the max usable sum, use it at this maximum.
         #Attention not to keep this when doing part 2.
         if dices_sum > len(Rewards.R):
-            dices_sum = len(Rewards.R)-1
+            dices_sum = len(Rewards.R) - 1
         return Rewards.R[dices_sum]
         
 
