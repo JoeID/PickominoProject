@@ -12,8 +12,8 @@ class Action:
 class State:
 
     def __init__(self, keptDices, remainingDices):
-        # keptDice : list of length 6 that indicates how many dice i the player has kept
-        # remainingDice : similar
+        # keptDices : tuple of length 6 that indicates how many dice i the player has kept
+        # remainingDices : similar
         assert(len(keptDices) == 6 and len(remainingDices) == 6)
         assert(sum(keptDices) + sum(remainingDices) == 8)
         # nbKept : nbKept : the player keeps the first nbKept bits for the moment
@@ -69,19 +69,20 @@ def reward(s : State, a):
     
     return s.get_kept_value()
 
-def compute_opt_policy():
+def compute_opt_policy(s : State):
     # first, compute reward and action (STOP) for every final state
-    policy = {} # maps a state to a (action, reward) pair
+    
+    # policy = {} # maps a state to a (action, reward) pair
 
-    for k in range(9):
-        for keptDices in utils.generate_distributions(k):
-            for remainingDices in utils.generate_distributions(8 - k):
+    # for k in range(9):
+    #     for keptDices in utils.generate_distributions(k):
+    #         for remainingDices in utils.generate_distributions(8 - k):
 
-                s = State(keptDices, remainingDices)
+    #             s = State(keptDices, remainingDices)
 
-                if s.is_final_state():
-                    a = Action.STOP
-                    policy[s] = (a, reward(s, a))
+    #             if s.is_final_state():
+    #                 a = Action.STOP
+    #                 policy[s] = (a, reward(s, a))
     
     
     print("finished !")
