@@ -28,14 +28,15 @@ class State:
         assert(sum(keptDices) + sum(remainingDices) == 8)
         self.keptDices = keptDices
         self.remainingDices = remainingDices
-        self.possibleActions = []
+        self.possibleActions = set()
 
-        self.is_final = self.possibleActions == set({})
-        #for i in range(6):
-        #    if self.keptDices[i] == 0 or self.remainingDices[i] != 0:
-        #        self.is_final = False
-        #        # a dice can be picked, so state is not final
-        #        break
+        #Computing the possible actions from the state
+        for i in range(6):
+            if self.keptDices[i] == 0 and self.remainingDices[i] != 0:
+                self.possibleActions.add(Action(True,i))
+                self.possibleActions.add(Action(False,i))
+        if self.possibleActions == set():
+            self.possibleActions.add(Action(True,None))
     
     def __str__(self):
         keptDices = []
@@ -58,12 +59,8 @@ class State:
         keptDices = tuple(keptDices)
         remainingDices = tuple(remainingDices)
         return "Kept dices : " + str(keptDices) + " Remaining dices : " + str(remainingDices)
-            
-    def is_final_state(self):
-        # returns true iff state is final ; that is no dice can be picked
-        # the boolean value is_final is computed at init for performance reasons
-        return self.is_final
 
+    ''' UTILE ?
     def get_kept_value(self):
         # assuming player chooses to stop immediately, how many points do they have ?
         if self.keptDices[0] == 0: # player did not keep a worm : failed !
@@ -82,7 +79,7 @@ class State:
         #Attention not to keep this when doing part 2.
         if dices_sum > len(Rewards.R):
             dices_sum = len(Rewards.R) - 1
-        return Rewards.R[dices_sum]
+        return Rewards.R[dices_sum]'''
         
 
 def reward(s : State, a):
