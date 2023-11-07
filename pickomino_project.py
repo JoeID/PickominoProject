@@ -52,12 +52,14 @@ class State:
         if self.is_final:
             return Rewards.C
 
-        reward = 0
+        dices_sum = 0
         for dice_value in range(6):
-            reward += self.keptDice[dice_value] * (dice_value + 1)
-        if reward < 21:
+            dices_sum += self.keptDice[dice_value] * (dice_value + 1)
+        if dices_sum < 21:
             return Rewards.C
-        
+        #If sum is over the max usable sum, use it at this maximum. 
+        if dices_sum > len(Rewards.R):
+            dices_sum = len(Rewards.R)-1
         return Rewards.R[reward]
         
 
