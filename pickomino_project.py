@@ -31,11 +31,7 @@ class State:
         self.possibleActions = []
 
         self.is_final = self.possibleActions == set({})
-        #for i in range(6):
-        #    if self.keptDices[i] == 0 or self.remainingDices[i] != 0:
-        #        self.is_final = False
-        #        # a dice can be picked, so state is not final
-        #        break
+
     
     def __str__(self):
         keptDices = []
