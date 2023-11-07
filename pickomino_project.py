@@ -16,8 +16,7 @@ class State:
         # remainingDices : similar
         assert(len(keptDices) == 6 and len(remainingDices) == 6)
         assert(sum(keptDices) + sum(remainingDices) == 8)
-        # nbKept : nbKept : the player keeps the first nbKept bits for the moment
-        self.keptDices = keptDices # TODO maybe copy ?
+        self.keptDices = keptDices
         self.remainingDices = remainingDices
 
         self.is_final = True
@@ -52,12 +51,15 @@ class State:
         if self.is_final:
             return Rewards.C
 
-        dices_sum = 0
-        for dice_value in range(6):
+        #Counting the number of points given by the worms 
+        dices_sum = 5 * self.keptDices[5]
+        #Counting the number of points given by the others dice faces
+        for dice_value in range(5):
             dices_sum += self.keptDices[dice_value] * (dice_value + 1)
         if dices_sum < 21:
             return Rewards.C
-        #If sum is over the max usable sum, use it at this maximum. 
+        #If sum is over the max usable sum, use it at this maximum.
+        #Attention not to keep this when doing part 2.
         if dices_sum > len(Rewards.R):
             dices_sum = len(Rewards.R)-1
         return Rewards.R[reward]
