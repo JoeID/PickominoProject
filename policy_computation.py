@@ -2,8 +2,7 @@ import math
 from pickomino_project import *
 from utils import *
 
-def opt_policy(s : State):
-    # first, compute reward and action (STOP) for every final state
+def opt_policy():
     policy = {} # maps a state to a (action, expected_reward) pair
 
     def expected_reward(s, a):
@@ -33,5 +32,6 @@ def opt_policy(s : State):
     
     
     print("finished !")
+    return policy
 
 opt_policy()
