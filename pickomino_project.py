@@ -1,3 +1,5 @@
+import utils
+
 class Rewards:
     C = 0
     R = [0 for i in range(21)] + [1 + i // 4 for i in range(16)]
@@ -42,7 +44,7 @@ class State:
 
     def get_kept_value(self):
         # assuming player chooses to stop immediately, how many points do they have ?
-        if self.keptDice[5] == 0: # player did not keep a Pickomino
+        if self.keptDice[5] == 0: # player did not keep a worm : failed !
             return Rewards.C
         if self.is_final:
             return Rewards.C
@@ -62,11 +64,17 @@ def reward(s : State, a):
     
     return s.get_kept_value()
 
-state_test = State([4,0,0,0,0,1], [0,0,3,0,0,0])
-print(state_test.get_kept_value(), state_test.is_final)
+def enumerate_lists(total, length):
+    if length == 1:
+        yield [total]
+    else:
+        for i in range(total + 1):
+            for l in enumerate_lists(total - i, length - 1):
+                l.append(i)
+                yield l
 
-r = [0 for i in range(21)] + [1 + i // 4 for i in range(16)] # reward vector 
-c = 0 # reward when turn is over and no score is attained
-print([r[i] for i in range(21, 37)])
 
-
+i = 0
+for l in enumerate_lists(8, 12):
+    i += 1
+print(i)
