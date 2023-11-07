@@ -5,14 +5,18 @@ class Rewards:
     R = [0 for i in range(21)] + [1 + i // 4 for i in range(16)]
 
 
-class Action:
-    '''There are 3 types of action : 
-        -pick a value of a rolled dice to keep and continue
-        -pick a value of a rolled dice to keep and take the highest value domino reacheable
-        -loose your turn'''
+class Action:    
     
-    def __init__(self, type, value):
-        self.stop = True
+    def __init__(self, stop : bool, value):
+        '''There are 3 types of action : 
+            -pick a value V of a rolled dice to keep and continue
+                (represented by stop = False and value = V)
+            -pick a value of a rolled dice to keep and take the highest value domino reacheable
+                (represented by stop = True and value = V)
+            -loose your turn
+                (represented by stop = True and value = None)'''
+        self.stop = stop
+        self.value = value
 
 
 class State:
