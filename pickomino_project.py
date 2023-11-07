@@ -11,9 +11,9 @@ class Action:
 
 class State:
 
-    def __init__(self, keptDices : list, remainingDices : list):
-        # keptDices : list of length 6 that indicates how many dices i the player has kept
-        # remainingDices : similar
+    def __init__(self, keptDices, remainingDices):
+        # keptDice : list of length 6 that indicates how many dice i the player has kept
+        # remainingDice : similar
         assert(len(keptDices) == 6 and len(remainingDices) == 6)
         assert(sum(keptDices) + sum(remainingDices) == 8)
         # nbKept : nbKept : the player keeps the first nbKept bits for the moment
@@ -35,7 +35,10 @@ class State:
                 keptDices.append(dice_value + 1)
             for j in range(self.remainingDices[dice_value]):
                 remainingDices.append(dice_value + 1)
-        return "Kept dices : " + str(keptDices) + " Remaining dices " + str(remainingDices)
+        #Converting back keptDice and remainingDice to tuples to fit the announced types
+        keptDices = tuple(keptDices)
+        remainingDices = tuple(remainingDices)
+        return "Kept dices : " + str(keptDices) + " Remaining dices : " + str(remainingDices)
             
     def is_final_state(self):
         # returns true iff state is final ; that is no dice can be picked
@@ -49,12 +52,14 @@ class State:
         if self.is_final:
             return Rewards.C
 
-        reward = 0
+        dices_sum = 0
         for dice_value in range(6):
-            reward += self.keptDices[dice_value] * (dice_value + 1)
-        if reward < 21:
+            dices_sum += self.keptDices[dice_value] * (dice_value + 1)
+        if dices_sum < 21:
             return Rewards.C
-        
+        #If sum is over the max usable sum, use it at this maximum. 
+        if dices_sum > len(Rewards.R):
+            dices_sum = len(Rewards.R)-1
         return Rewards.R[reward]
         
 
