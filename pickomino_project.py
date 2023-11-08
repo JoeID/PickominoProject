@@ -1,6 +1,6 @@
 from utils import *
 
-class Rewards:
+class Rewards: # it's a global variable but prettier
     C = 0
     R = [0 for i in range(21)] + [1 + i // 4 for i in range(16)] + [4 for i in range(4)]
 
@@ -35,7 +35,7 @@ class State:
 
     def get_possibleActions(self):
         if self.possibleActions is None:
-        #If not already done, computie the possible actions from the state
+        #If not already done, compute the possible actions from the state
             self.possibleActions = set()
             for i in range(6):
                 if self.keptDices[i] == 0 and self.remainingDices[i] != 0:

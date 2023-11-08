@@ -1,3 +1,6 @@
+import functools
+
+@functools.lru_cache(maxsize=9) # we use memoization on this function because the number of different calls is small
 def generate_distributions(number_dices : int):
     '''Return a list of all the distribution one can get by throwing number_dices dices'''
     res = []
