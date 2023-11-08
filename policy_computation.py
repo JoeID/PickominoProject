@@ -2,10 +2,9 @@ import math
 from pickomino_project import *
 from utils import *
 
-def opt_policy(progress_indicator = False):
-    probability = compute_probability(8) #Generate the probability of every dices distribution.
+def opt_policy(total_dices : int  = 8, progress_indicator : bool = False):
+    probability = compute_probability(total_dices) #Generate the probability of every dices distribution.
     policy = {} # maps a state to a (action, expected_reward) pair
-    deja_vu = set()
 
     def expected_reward(s : State, a : Action):
         if a.stop:
@@ -20,7 +19,7 @@ def opt_policy(progress_indicator = False):
             new_keptDices = list(s.keptDices)
             new_keptDices[a.value] = s.remainingDices[a.value]
             new_keptDices = tuple(new_keptDices)
-            number_dices = 8 - sum(new_keptDices)
+            number_dices = total_dices - sum(new_keptDices)
             res = 0
             for remainingDices in generate_distributions(number_dices):
                 reward = opt_policy_state(State(new_keptDices,remainingDices))[1]
@@ -43,7 +42,7 @@ def opt_policy(progress_indicator = False):
         return policy[s]
 
     #Computing the optimal policy for all possible starting state
-    for remainingDices in generate_distributions(8):
+    for remainingDices in generate_distributions(total_dices):
         s = State((0,0,0,0,0,0), remainingDices)
         opt_policy_state(s)
     if progress_indicator:
@@ -54,10 +53,24 @@ def opt_policy(progress_indicator = False):
 ###############
 #### TESTS ####
 ###############
+def test_opt_policy1(progress_indicator):
+    policy = opt_policy(progress_indicator=progress_indicator)
+    little_policy = {}
+    for key in policy:
+        if sum(key.remainingDices)==1:
+            little_policy[key] = policy[key]
+    pretty_print_strategy(little_policy)
+
 def test_opt_policy(progress_indicator):
-    (action, gain) = opt_policy(True)[State((0,0,0,0,0,0),(1, 1, 0, 3, 2, 1))]
-    print(action, gain)
+    policy = opt_policy(progress_indicator=progress_indicator)
+    (action, gain) = policy[State((0,0,0,0,0,0),(1, 1, 0, 3, 2, 1))]
+    pretty_print_strategy(policy)
+    print("La strategie optimale est de choisir l'action : ", action, " et cela apporte un gain moyen : ", gain)
 
 def test():
+    print("Début des tests de policy_computation.py :")
     test_opt_policy(True)
+    #test_opt_policy1(True)
+    print("Fin des tests de policy_computation.py")
+
 test()

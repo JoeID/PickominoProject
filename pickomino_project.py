@@ -18,8 +18,8 @@ class Action:
         self.stop = stop
         self.value = value
 
-    def __str__(self) -> str:
-        return str((str(self.stop),str(self.value)))
+    def __str__(self):
+        return "("+str(self.stop)+","+str(self.value)+")"
 
 class State:
 
@@ -27,7 +27,7 @@ class State:
         # keptDices : tuple of length 6 that indicates how many dice i the player has kept
         # remainingDices : similar
         assert(len(keptDices) == 6 and len(remainingDices) == 6)
-        assert(sum(keptDices) + sum(remainingDices) == 8)
+        #assert(sum(keptDices) + sum(remainingDices) == 8)
         self.keptDices = keptDices
         self.remainingDices = remainingDices
         #It is often unecessary to compute the possibles actions

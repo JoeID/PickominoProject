@@ -32,10 +32,21 @@ def compute_probability(max_dices : int):
 
 def sum_values(dices):
     '''Compute the value of a dice set'''
-    res = 5 * dices[0]
-    for dice_value in range(1, 6):
-        res += dices[dice_value] * dice_value
-    return res
+    #Without a worm, one cannot get a domino, so the value of their dices is 0.
+    if dices[0] == 0:
+        return 0
+    else:
+        res = 5 * dices[0]
+        for dice_value in range(1, 6):
+            res += dices[dice_value] * dice_value
+        return res
+
+def pretty_print_strategy(strategy):
+    print("{")
+    for state in strategy.keys():
+        (action,gain) = strategy[state]
+        print(state, " : (", action, ",", gain)
+    print("}")
 
 ###############
 #### TESTS ####
@@ -49,7 +60,8 @@ def test_compute_probability():
     print("La somme des probabilité d'apparition de chaque jeté de 8 dés est ",sum)
           
 def run_tests():
-    print("Début des tests :")
+    print("Début des tests de utils.py :")
     test_compute_probability()
+    print("Fin des tests de utils.py.")
 
 run_tests()
