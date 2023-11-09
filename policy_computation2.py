@@ -1,5 +1,6 @@
 import math
 import time
+import pickle
 from pickomino_project2 import *
 from utils import *
 
@@ -62,6 +63,8 @@ def simulate_game(dices, dominos, alpha_player, beta_player, alpha_opponent, bet
     board_dominos = dominos
     
     #We save the already computed policies to avoid many time loss
+    with open("policy_c0.pk1", "rb") as file:
+        policies = pickle.load(file)
     policies = {}
 
     def get_policy(alpha, beta, player_domino, opponent_domino):
@@ -108,7 +111,6 @@ def simulate_game(dices, dominos, alpha_player, beta_player, alpha_opponent, bet
                 board_dominos.append(player_dominos.pop())
         elif (len(opponent_dominos)>0 and domino == opponent_dominos[-1]):
             print("Steals ", domino)
-            print(opponent_dominos)
             #Case where the player steals its opponent
             player_dominos.append(opponent_dominos.pop())
         else:
@@ -118,7 +120,6 @@ def simulate_game(dices, dominos, alpha_player, beta_player, alpha_opponent, bet
             board_dominos.remove(domino)
 
     while board_dominos != []:
-        print("Hey")
         if len(player_dominos)>0:
             player_domino = player_dominos[-1]
         else:
@@ -152,6 +153,8 @@ def simulate_game(dices, dominos, alpha_player, beta_player, alpha_opponent, bet
     opponent_score = 0
     for domino in opponent_dominos:
         opponent_score += domino[1]
+    with open("policy_c0.pk1", "wb") as file:
+        pickle.dump(policies,file)
     return (player_score, opponent_score)
 
 ###############
