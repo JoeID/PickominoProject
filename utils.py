@@ -1,4 +1,5 @@
 import functools
+import random
 
 @functools.lru_cache(maxsize=9) # we use memoization on this function because the number of different calls is small
 def generate_distributions(number_dices : int):
@@ -50,6 +51,12 @@ def pretty_print_strategy(strategy):
         (action,gain) = strategy[state]
         print(state, " : (", action, ",", gain)
     print("}")
+
+def throw(dices):
+    res = [0 for _ in range(6)]
+    for i in range(dices):
+        res[random.randint(0,5)] += 1
+    return tuple(res)
 
 ###############
 #### TESTS ####

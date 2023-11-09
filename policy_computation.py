@@ -75,6 +75,11 @@ def test_opt_policy(progress_indicator):
     #pretty_print_strategy(policy)
     print("La strategie optimale est de choisir l'action : ", action, " et cela apporte un gain moyen : ", gain)
 
+def test_small_policy():
+    print("Début du calcul de policy a 4 dés")
+    policy = opt_policy(total_dices = 4)
+    print("Fin du calcul de policy a 4 dés")
+
 def test():
     print("Début des tests de policy_computation.py :")
     start = time.time()
