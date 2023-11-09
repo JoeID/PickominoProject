@@ -1,9 +1,29 @@
 from utils import *
 
 class Rewards: # it's a global variable but prettier
-    C = 0
-    R = [0 for i in range(21)] + [1 + i // 4 for i in range(16)] + [4 for i in range(4)]
-
+    
+    def __init__(self, dominos, player_top_domino, opponent_top_domino, alpha, beta):
+        self.dominos = dominos
+        self.player_top_domino = player_top_domino
+        self.opponent_top_domino = opponent_top_domino
+        self.alpha = alpha
+        self.beta = beta
+    
+    def get_reward(self, value):
+        '''Return the best domino taken and the corresponding reward'''
+        if not(self.opponent_top_domino is None) and value == self.opponent_top_domino[0]:
+            return (self.opponent_top_domino, 2*self.beta*self.opponent_top_domino[1])
+        #If the value is not enough to take any domino, the player looses his top one.
+        if self.player_top_domino == None:
+            res = (None, 0)
+        else:
+            res = (None, -self.alpha * self.player_top_domino[1])
+        #If the value is enough to take a domino, take the one with higher value
+        for domino in self.dominos:
+            if domino[0] <= value and ((not res is None) or res[0][0]<domino[0]):
+                res = (domino, domino[1])
+        return res
+        
 class Action:    
     
     def __init__(self, stop : bool, value):
@@ -19,12 +39,6 @@ class Action:
 
     def __str__(self):
         return "("+str(self.stop)+","+str(self.value)+")"
-    
-    def __hash__(self):
-        return hash((self.stop,self.value))
-    
-    def __eq__(self, other):
-        return (self.stop, self.value) == (other.stop, other.value)
 
 class State:
 
@@ -52,7 +66,7 @@ class State:
         return self.possibleActions
     
     def __str__(self):
-        return str((str(self.keptDices), str(self.remainingDices))) 
+        return str((str(self.keptDices), str(self.remainingDices)))
     
     def __hash__(self):
         return hash((self.keptDices,self.remainingDices))
