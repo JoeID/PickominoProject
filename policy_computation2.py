@@ -133,19 +133,20 @@ def simulate_game(dices, dominos, alpha_player, beta_player, alpha_opponent, bet
         print("Player :")
         simulate_round(policy, rewards, player_dominos, opponent_dominos)
         
-        #And now the opponent round
-        if len(player_dominos)>0:
-            player_domino = player_dominos[-1]
-        else:
-            player_domino = None
-        if len(opponent_dominos)>0:
-            opponent_domino = opponent_dominos[-1]
-        else:
-            opponent_domino = None
-        policy = get_policy(alpha_opponent, beta_opponent, opponent_domino, player_domino)
-        rewards = Rewards(board_dominos, opponent_domino, player_domino, alpha_opponent, beta_opponent)
-        print("Opponent :")
-        simulate_round(policy, rewards, opponent_dominos, player_dominos)
+        if board_dominos !=[]:
+            #And now the opponent round
+            if len(player_dominos)>0:
+                player_domino = player_dominos[-1]
+            else:
+                player_domino = None
+            if len(opponent_dominos)>0:
+                opponent_domino = opponent_dominos[-1]
+            else:
+                opponent_domino = None
+            policy = get_policy(alpha_opponent, beta_opponent, opponent_domino, player_domino)
+            rewards = Rewards(board_dominos, opponent_domino, player_domino, alpha_opponent, beta_opponent)
+            print("Opponent :")
+            simulate_round(policy, rewards, opponent_dominos, player_dominos)
     
     player_score = 0
     for domino in player_dominos:
