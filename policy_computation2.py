@@ -63,9 +63,12 @@ def simulate_game(dices, dominos, alpha_player, beta_player, alpha_opponent, bet
     board_dominos = dominos
     
     #We save the already computed policies to avoid many time loss
-    with open("policy_c0.pk1", "rb") as file:
+    try:
+        file = open("policy_c0.pk1", "rb")
         policies = pickle.load(file)
-    policies = {}
+        file.close()
+    except:
+        policies = {}
 
     def get_policy(alpha, beta, player_domino, opponent_domino):
         key = (alpha, beta, player_domino, opponent_domino)
@@ -154,7 +157,7 @@ def simulate_game(dices, dominos, alpha_player, beta_player, alpha_opponent, bet
     opponent_score = 0
     for domino in opponent_dominos:
         opponent_score += domino[1]
-    with open("policy_c0.pk1", "wb") as file:
+    with open("policy_c0.pk1", "wb+") as file:
         pickle.dump(policies,file)
     return (player_score, opponent_score)
 
