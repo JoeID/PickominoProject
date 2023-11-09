@@ -20,6 +20,12 @@ class Action:
 
     def __str__(self):
         return "("+str(self.stop)+","+str(self.value)+")"
+    
+    def __hash__(self):
+        return hash((self.stop,self.value))
+    
+    def __eq__(self, other):
+        return (self.stop, self.value) == (other.stop, other.value)
 
 class State:
 

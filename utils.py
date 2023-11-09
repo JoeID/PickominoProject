@@ -34,7 +34,7 @@ def compute_probability(max_dices : int):
     return probability
 
 def sum_values(dices):
-    '''Compute the value of a dice set'''
+    '''Compute the value of a dice set taking the presence of worms into account'''
     #Without a worm, one cannot get a domino, so the value of their dices is 0.
     if dices[0] == 0:
         return 0
@@ -67,4 +67,4 @@ def run_tests():
     test_compute_probability()
     print("Fin des tests de utils.py.")
 
-run_tests()
+#run_tests()
