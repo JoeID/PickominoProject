@@ -151,7 +151,7 @@ def simulate_game(dices, dominos, alpha_player, beta_player, alpha_opponent, bet
         player_score += domino[1]
     opponent_score = 0
     for domino in opponent_dominos:
-        opponent_score += domino[0]
+        opponent_score += domino[1]
     return (player_score, opponent_score)
 
 ###############
