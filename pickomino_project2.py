@@ -1,9 +1,9 @@
 from utils import *
 
-class Rewards: # it's a global variable but prettier
+class Rewards: 
     
     def __init__(self, dominos, player_top_domino, opponent_top_domino, alpha, beta):
-        self.dominos = dominos
+        self.dominos = dominos # remaining dominos to take. A domino is a (points, value) pair
         self.player_top_domino = player_top_domino
         self.opponent_top_domino = opponent_top_domino
         self.alpha = alpha

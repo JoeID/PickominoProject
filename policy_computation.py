@@ -169,10 +169,15 @@ def test():
     print("Fin des tests de policy_computation.py")
 
 #test()
-subquestions()
+#subquestions()
 
 # with open("policy_c0.pk1", "rb") as file:
 #     policy_c0 = pickle.load(file)
+
+#     throw = (1, 2, 1, 0, 3, 1)
+#     s = State((0, 0, 0, 0, 0, 0), throw)
+#     print("Pour le lancer", throw, "La strategie optimale est de choisir l'action : ", policy_c0[s][0], " et cela apporte un gain moyen : ", policy_c0[s][1])
+
 
 # with open("policy_cm3.pk1", "rb") as file:
 #     policy_cm3 = pickle.load(file)
